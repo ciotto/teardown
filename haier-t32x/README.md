@@ -1,6 +1,11 @@
-# Reverse the Haier T32X robot (Work in Progress)
+# Reverse the Haier T32X robot 
+###(Work in Progress)
 
-I'm trying to reverse engineering the **Haier T325** Cleaning Robot. First of all I opened the plastic shell and I inspect the PCB:
+I'm trying to reverse engineering the **Haier T325** Cleaning Robot.
+
+Probably this robot is produced by *ILife* and is very similar to the **ILife V1** and to the **Ariete 2711**.
+
+First of all I opened the plastic shell and I inspected the PCB:
 
 ![Haier T325](images/haier-t325.jpg)
 
@@ -42,7 +47,7 @@ In the STM32F10xxx, 3 different boot modes can be selected through BOOT[1:0] pin
 
 ![PCB bottom](images/boot.jpg)
 
-In order to ease the work, I dismounted the PCB from the robot and I found that in the bottom of the board that the manufacturer had made a lot of test connection pads:
+In order to ease the work, I dismounted the PCB from the robot and I found that in the bottom of the board the manufacturer had made a lot of test connection pads:
 
 ![PCB bottom](images/bottom.jpg)
 
@@ -67,11 +72,11 @@ Count | Name | Purpose
 
 With all the data, I started to investigate the MCU and I checked the accessible GND and VDD pins, but something's not right, the ground position doesn't match the datasheet pinout but, probably, the text over the chip are only tourned of 90°.
 
-I must inspect all pins and, for this purpose, I have unsoldered the control panel. I don't have a lot of experience in unsoldering and I have damaged the pads, but, after this operation, I have access to all pins of the MCU and I have the confirmed my hypothesis:
+I must inspect all pins and, for this purpose, I have unsoldered the control panel. I don't have a lot of experience in unsoldering and I have damaged the pads, but, after this operation, I have access to all pins of the MCU and I have confirmed my hypothesis:
 
 ![STM32F103 in LQFP100](images/STM32F103_LQFP100.jpg)
 
-At this time, I took sufficient data to find the SWD, USART1 and BOOT pins over the board. This operation can be done using a multimeter and a lot of patience. Following the tracks of the PCB we can have an idea of the connections and then we can check it with the multimeter short circuit test. Be careful that the PCBs can many layers (usually 2, top and bottom) and that layers can be connected by VIAs (vertical interconnect access). Tracks and VIAs can be placed under other components.
+At this time, I took sufficient data to find the SWD, USART1 and BOOT pins over the board. This operation can be done using a multimeter and a lot of patience. Following the tracks of the PCB we can have an idea of the connections and then we can check it with the multimeter short circuit test. Be careful that the PCBs can have many layers (usually 2, top and bottom) and that layers can be connected by VIAs (vertical interconnect access). Tracks and VIAs can be placed under other components.
 
 Jumper | Pin 1 | Pin 2 | Pin 3 | Pin 4
 -------|-------|-------|-------|-------
@@ -243,6 +248,8 @@ Ilife AI Cleaning Robot
 BaseLineCurrent = 0122
 Battery Voltage = 1596
 ```
+
+Good, this is the confirmation that this robot is produced by *ILife*.
 
 When I tried to start the board with BOOT0 to 3V3 there was no output, so probably this confirm that the **Read Out protection** is setted to *Level 1* or *Level 2*.
 
